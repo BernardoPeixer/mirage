@@ -1,3 +1,5 @@
 {
-  "helloWord": "Olá mundo"
+  "connectWalletButton": "Conectar carteira",
+  "cryptoForFestivalPerks": "Cripto por benefícios do festival",
+  "buyNowButton": "Comprar agora"
 }

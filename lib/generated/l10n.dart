@@ -54,9 +54,29 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Hello word`
-  String get helloWord {
-    return Intl.message('Hello word', name: 'helloWord', desc: '', args: []);
+  /// `Connect Wallet`
+  String get connectWalletButton {
+    return Intl.message(
+      'Connect Wallet',
+      name: 'connectWalletButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Crypto for festival perks`
+  String get cryptoForFestivalPerks {
+    return Intl.message(
+      'Crypto for festival perks',
+      name: 'cryptoForFestivalPerks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Buy now`
+  String get buyNowButton {
+    return Intl.message('Buy now', name: 'buyNowButton', desc: '', args: []);
   }
 }
 

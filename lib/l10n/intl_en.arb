@@ -1,3 +1,5 @@
 {
-  "helloWord": "Hello word"
+  "connectWalletButton": "Connect Wallet",
+  "cryptoForFestivalPerks": "Crypto for festival perks",
+  "buyNowButton": "Buy now"
 }

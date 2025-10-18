@@ -23,7 +23,7 @@ class AppPadding {
   static const itemLargeVertical = EdgeInsets.symmetric(vertical: 8.0);
 
   /// Padding default in all screen
-  static const screen = EdgeInsets.only(bottom: 8.0);
+  static const screen = EdgeInsets.symmetric(horizontal: 15);
 
   /// Padding horizontal default in all components screen
   static const body = EdgeInsets.only(

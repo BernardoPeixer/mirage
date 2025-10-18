@@ -2,6 +2,24 @@ import 'package:flutter/material.dart';
 
 /// Default color of the application
 class AppColors {
+  /// Default scaffold background color — a soft, warm beige tone for a light
+  /// and inviting interface.
+  static const scaffoldColorDefault = Color(0xFFFFF5D4);
+
+  /// Warm brown color used for accents, typography, or decorative elements.
+  static const warmBrown = Color(0xFFA8744F);
+
+  /// Soft orange color used for highlights, buttons, or interactive elements.
+  static const softOrange = Color(0xFFF29C6A);
+
+  /// Secondary dark green color used for backgrounds or contrast elements.
+  static const secondaryGreen = Color(0xFF5B734D);
+
+  /// Terracotta red ideal for highlights, subtle alerts, or elements that
+  /// convey energy and warmth.
+  static const terracottaRed = Color(0xFFC64B3A);
+
+  /// ==========================================
   /// Optimistic gray used in hint text
   static const optimisticGray = Color(0xFF736B66);
 
@@ -25,7 +43,7 @@ class AppColors {
 
   /// Used in text to app screens
   static const mindfulBrown80 = Color(0xff4F3422);
-  
+
   ///Third color in the light mode
   static const darkBlue = Color.fromRGBO(1, 21, 129, 1);
 

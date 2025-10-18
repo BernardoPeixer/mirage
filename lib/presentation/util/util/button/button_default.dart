@@ -12,6 +12,8 @@ class ButtonDefault extends StatelessWidget {
     this.fillColor,
     this.shape,
     this.buttonPadding,
+    this.borderSide,
+    this.splashColor,
   });
 
   /// Function is called when button is pressed
@@ -42,42 +44,26 @@ class ButtonDefault extends StatelessWidget {
   /// The default padding is [AppPadding.buttonPadding]
   final EdgeInsets? buttonPadding;
 
+  /// Border side used in the button
+  final BorderSide? borderSide;
+
+  /// Splash color used in the button
+  final Color? splashColor;
+
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
       onPressed: onPressed,
-      fillColor: fillColor ?? AppColors.darkGreen,
-      shape: shape ??
+      fillColor: fillColor ?? Colors.transparent,
+      shape:
+          shape ??
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100),
+            side: borderSide ?? BorderSide.none,
+            borderRadius: BorderRadius.circular(30),
           ),
       padding: buttonPadding ?? AppPadding.buttonPadding,
+      splashColor: splashColor,
       child: child,
-    );
-  }
-
-  factory ButtonDefault.icon({
-    required VoidCallback onPressed,
-    required String textContent,
-    required IconData icon,
-    required BuildContext context,
-  }) {
-    return ButtonDefault(
-      onPressed: onPressed,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            textContent,
-            style: context.mediumBody,
-          ),
-          Padding(padding: AppPadding.itemHorizontal),
-          Icon(
-            icon,
-            color: Colors.white,
-          ),
-        ],
-      ),
     );
   }
 }
