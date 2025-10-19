@@ -1,5 +1,9 @@
 {
   "connectWalletButton": "Connect Wallet",
   "cryptoForFestivalPerks": "Crypto for festival perks",
-  "buyNowButton": "Buy now"
+  "buyNowButton": "Buy now",
+  "unexpectedError": "Unexpected error",
+  "available": "Available",
+  "unavailable": "Unavailable",
+  "credits": "Credits"
 }

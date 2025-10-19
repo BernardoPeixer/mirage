@@ -19,6 +19,19 @@ class AppColors {
   /// convey energy and warmth.
   static const terracottaRed = Color(0xFFC64B3A);
 
+
+  /// Light green used to indicate that a festival card is available.
+  /// Ideal for backgrounds or highlight elements in the UI.
+  static const availableCardColor = Color(0xffDCEB88);
+
+  /// Soft terracotta color used to indicate that a festival card is unavailable.
+  /// Suitable for backgrounds or status indicators.
+  static const unavailableCardColor = Color(0xffF29C6A);
+
+  /// Dark terracotta color used for text on cards that are unavailable.
+  /// Provides good contrast against [unavailableCardColor].
+  static const unavailableTextColor = Color(0xffA33D2E);
+
   /// ==========================================
   /// Optimistic gray used in hint text
   static const optimisticGray = Color(0xFF736B66);

@@ -45,6 +45,8 @@ dependencies:
   local_auth: ^2.3.0
   flutter_web3: ^2.1.9
   flutter_svg: ^2.2.1
+  decimal: ^3.2.4
+  http: ^1.5.0
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +73,8 @@ flutter:
   assets:
     - assets/images/fest_chain_logo.svg
     - assets/images/eth.svg
+    - assets/images/btc.svg
+    - assets/images/pyusd.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

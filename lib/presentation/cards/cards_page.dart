@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mirage/default/padding.dart';
 import 'package:mirage/default/text_styles.dart';
+import 'package:mirage/domain/entities/entity_cards.dart';
 import 'package:mirage/extension/context.dart';
+import 'package:mirage/presentation/cards/states/cards_page_state.dart';
+import 'package:mirage/presentation/state/global.dart';
 import 'package:mirage/presentation/util/util/button/outlined_button_default.dart';
 import 'package:mirage/presentation/util/util/custom_chip_default.dart';
+import 'package:mirage/presentation/util/util/eth_loading_default.dart';
+import 'package:provider/provider.dart';
 
 import '../../default/app_assets.dart';
 import '../../default/colors.dart';
@@ -19,31 +24,48 @@ class CardsPage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: AppPadding.screen,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Text(
-                    'Festival Cards',
-                    style: TextStylesDefault.robotoTitleBold.copyWith(
-                      fontSize: 24,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                Padding(padding: AppPadding.itemLargeVertical),
-                Padding(padding: AppPadding.itemLargeVertical),
-                for(var i = 0; i < 15; i++)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: _CardDefault(),
-                ),
-              ],
-            ),
+          child: ChangeNotifierProvider(
+            create: (context) => CardsPageState(useCase: cardsUseCase),
+            child: _ScreenContent(),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _ScreenContent extends StatelessWidget {
+  const _ScreenContent();
+
+  @override
+  Widget build(BuildContext context) {
+    final state = Provider.of<CardsPageState>(context);
+
+    if (state.isLoading) {
+      return EthereumLoadingDefault(loadingText: 'Carregando anúncios...');
+    }
+
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Text(
+              'Festival Cards',
+              style: TextStylesDefault.robotoTitleBold.copyWith(
+                fontSize: 24,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          Padding(padding: AppPadding.itemLargeVertical),
+          for (final item in state.cards)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: _FestivalCard(card: item, onPressed: () {},),
+            ),
+        ],
       ),
     );
   }
@@ -66,13 +88,26 @@ class _ChipFilterRow extends StatelessWidget {
   }
 }
 
-class _CardDefault extends StatelessWidget {
-  const _CardDefault({super.key});
+/// Widget that displays a single festival card with balance, crypto info,
+/// status, and a "Buy Now" button.
+///
+/// Uses [FestivalCard] to populate all relevant information and styles.
+class _FestivalCard extends StatelessWidget {
+  /// Constructs a [_FestivalCard] with the given [card] data.
+  const _FestivalCard({required this.card, required this.onPressed});
+
+  /// The festival card data displayed by this widget.
+  final FestivalCard card;
+
+  /// Callback triggered when the button or interactive element is pressed.
+  /// Typically used to perform actions such as navigation, API calls, or
+  /// updating state.
+  final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 160,
+      height: 140,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -93,7 +128,7 @@ class _CardDefault extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '100 Credits',
+                '${card.balance} ${context.s.credits}',
                 style: TextStylesDefault.robotoTitleBold.copyWith(
                   fontSize: 18,
                   color: Color(0xffA8744F),
@@ -102,14 +137,14 @@ class _CardDefault extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
                 decoration: BoxDecoration(
-                  color: Color(0xffDCEB88),
+                  color: card.cardStatusColor,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  'Available',
+                  card.cardStatus,
                   style: TextStylesDefault.robotoTitleBold.copyWith(
                     fontSize: 14,
-                    color: Color(0xffF29C6A),
+                    color: card.cardTextStatusColor,
                   ),
                 ),
               ),
@@ -121,9 +156,9 @@ class _CardDefault extends StatelessWidget {
               Row(
                 spacing: 4,
                 children: [
-                  SvgPicture.asset(AppAssets.ethereumPath, height: 20),
+                  SvgPicture.asset(card.cryptoType.cryptoImage(), height: 20),
                   Text(
-                    '0.3ETH',
+                    card.cryptoPriceFormatted,
                     style: TextStylesDefault.robotoSubtitleSemiBold.copyWith(
                       fontSize: 14,
                       color: Colors.black,
@@ -137,7 +172,7 @@ class _CardDefault extends StatelessWidget {
                   color: AppColors.secondaryGreen,
                   width: 1,
                 ),
-                onPressed: () {},
+                onPressed: onPressed,
                 borderRadius: BorderRadius.circular(16),
                 color: AppColors.softOrange,
                 splashColor: AppColors.terracottaRed.withAlpha(

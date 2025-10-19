@@ -1,5 +1,9 @@
 {
   "connectWalletButton": "Conectar carteira",
   "cryptoForFestivalPerks": "Cripto por benefícios do festival",
-  "buyNowButton": "Comprar agora"
+  "buyNowButton": "Comprar agora",
+  "unexpectedError": "Erro inesperado",
+  "available": "Disponível",
+  "unavailable": "Indisponível",
+  "credits": "Créditos"
 }

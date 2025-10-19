@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mirage/default/text_styles.dart';
 
+import '../../../default/colors.dart';
+
 class CustomChipDefault extends StatelessWidget {
   const CustomChipDefault({
     super.key,
@@ -33,7 +35,7 @@ class CustomChipDefault extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStylesDefault.robotoTitleBold.copyWith(
             fontSize: 14,
-            color: isSelected ? Colors.white : Color(0xffF29C6A),
+            color: isSelected ? Colors.white : AppColors.softOrange,
           ),
         ),
       ),

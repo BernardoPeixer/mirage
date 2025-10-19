@@ -78,6 +78,31 @@ class S {
   String get buyNowButton {
     return Intl.message('Buy now', name: 'buyNowButton', desc: '', args: []);
   }
+
+  /// `Unexpected error`
+  String get unexpectedError {
+    return Intl.message(
+      'Unexpected error',
+      name: 'unexpectedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Available`
+  String get available {
+    return Intl.message('Available', name: 'available', desc: '', args: []);
+  }
+
+  /// `Unavailable`
+  String get unavailable {
+    return Intl.message('Unavailable', name: 'unavailable', desc: '', args: []);
+  }
+
+  /// `Credits`
+  String get credits {
+    return Intl.message('Credits', name: 'credits', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

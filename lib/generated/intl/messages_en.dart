@@ -22,12 +22,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "available": MessageLookupByLibrary.simpleMessage("Available"),
     "buyNowButton": MessageLookupByLibrary.simpleMessage("Buy now"),
     "connectWalletButton": MessageLookupByLibrary.simpleMessage(
       "Connect Wallet",
     ),
+    "credits": MessageLookupByLibrary.simpleMessage("Credits"),
     "cryptoForFestivalPerks": MessageLookupByLibrary.simpleMessage(
       "Crypto for festival perks",
     ),
+    "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),
+    "unexpectedError": MessageLookupByLibrary.simpleMessage("Unexpected error"),
   };
 }

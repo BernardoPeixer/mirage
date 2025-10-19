@@ -7,4 +7,10 @@ class AppAssets {
 
   /// Path to the ethereum logo SVG file.
   static const ethereumPath = 'assets/images/eth.svg';
+
+  /// Path to the bitcoin logo SVG file.
+  static const bitcoinPath = 'assets/images/btc.svg';
+
+  /// Path to the PayPal USD logo SVG file.
+  static const payPalUsdPath = 'assets/images/pyusd.svg';
 }
