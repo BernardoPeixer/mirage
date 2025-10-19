@@ -5,5 +5,11 @@
   "unexpectedError": "Unexpected error",
   "available": "Available",
   "unavailable": "Unavailable",
-  "credits": "Credits"
+  "credits": "Credits",
+  "cryptoValue": "Crypto value",
+  "balance": "Balance",
+  "cryptoType": "Crypto type",
+  "cardRegistration": "Card registration",
+  "registerButton": "Register",
+  "fieldRequired": "This field is required"
 }

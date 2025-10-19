@@ -103,6 +103,51 @@ class S {
   String get credits {
     return Intl.message('Credits', name: 'credits', desc: '', args: []);
   }
+
+  /// `Crypto value`
+  String get cryptoValue {
+    return Intl.message(
+      'Crypto value',
+      name: 'cryptoValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Balance`
+  String get balance {
+    return Intl.message('Balance', name: 'balance', desc: '', args: []);
+  }
+
+  /// `Crypto type`
+  String get cryptoType {
+    return Intl.message('Crypto type', name: 'cryptoType', desc: '', args: []);
+  }
+
+  /// `Card registration`
+  String get cardRegistration {
+    return Intl.message(
+      'Card registration',
+      name: 'cardRegistration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get registerButton {
+    return Intl.message('Register', name: 'registerButton', desc: '', args: []);
+  }
+
+  /// `This field is required`
+  String get fieldRequired {
+    return Intl.message(
+      'This field is required',
+      name: 'fieldRequired',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -5,5 +5,11 @@
   "unexpectedError": "Erro inesperado",
   "available": "Disponível",
   "unavailable": "Indisponível",
-  "credits": "Créditos"
+  "credits": "Créditos",
+  "cryptoValue": "Valor da cripto",
+  "balance": "Saldo",
+  "cryptoType": "Tipo da cripto",
+  "cardRegistration": "Cadastro de cartão",
+  "registerButton": "Cadastrar",
+  "fieldRequired": "Campo obrigatório"
 }

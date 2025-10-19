@@ -38,7 +38,7 @@ class AppPadding {
   /// TextForm padding use in default in new Constructor
   /// [TextFormBoxDefault.padding]
   static const textForm = EdgeInsets.symmetric(
-    vertical: 12.0,
+    vertical: 8.0,
     horizontal: 10.0,
   );
 

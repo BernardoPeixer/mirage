@@ -3,16 +3,21 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mirage/default/padding.dart';
 import 'package:mirage/default/text_styles.dart';
 import 'package:mirage/domain/entities/entity_cards.dart';
+import 'package:mirage/domain/entities/entity_crypto.dart';
 import 'package:mirage/extension/context.dart';
 import 'package:mirage/presentation/cards/states/cards_page_state.dart';
+import 'package:mirage/presentation/cards/states/cards_register_state.dart';
 import 'package:mirage/presentation/state/global.dart';
 import 'package:mirage/presentation/util/util/button/outlined_button_default.dart';
 import 'package:mirage/presentation/util/util/custom_chip_default.dart';
 import 'package:mirage/presentation/util/util/eth_loading_default.dart';
+import 'package:mirage/presentation/util/util/input/drop_down_default.dart';
 import 'package:provider/provider.dart';
 
 import '../../default/app_assets.dart';
 import '../../default/colors.dart';
+import '../../generated/l10n.dart';
+import '../util/util/input/text_form_box_default.dart';
 
 class CardsPage extends StatelessWidget {
   const CardsPage({super.key});
@@ -20,7 +25,28 @@ class CardsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.scaffoldColorDefault,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (context) {
+              return Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: ChangeNotifierProvider(
+                  create: (context) =>
+                      CardsRegisterState(useCase: cardsUseCase),
+                  child: _RegisterCardBottomSheet(),
+                ),
+              );
+            },
+          );
+        },
+      ),
       body: SafeArea(
         child: Padding(
           padding: AppPadding.screen,
@@ -63,27 +89,10 @@ class _ScreenContent extends StatelessWidget {
           for (final item in state.cards)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
-              child: _FestivalCard(card: item, onPressed: () {},),
+              child: _FestivalCard(card: item, onPressed: () {}),
             ),
         ],
       ),
-    );
-  }
-}
-
-/// TODO: Implements filter row in next MVP version
-class _ChipFilterRow extends StatelessWidget {
-  const _ChipFilterRow({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      spacing: 12,
-      children: [
-        CustomChipDefault(label: 'Available', index: 0, selectedIndex: 1),
-        CustomChipDefault(label: 'Unavailable', index: 1, selectedIndex: 1),
-        CustomChipDefault(label: 'My Cards', index: 2, selectedIndex: 2),
-      ],
     );
   }
 }
@@ -193,4 +202,148 @@ class _FestivalCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class _RegisterCardBottomSheet extends StatelessWidget {
+  const _RegisterCardBottomSheet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final state = Provider.of<CardsRegisterState>(context);
+
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+      height: 300,
+      decoration: BoxDecoration(
+        color: Color(0xffFFF1D9),
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(20),
+          topLeft: Radius.circular(20),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        spacing: 4,
+        children: [
+          Text(
+            context.s.cardRegistration,
+            style: TextStylesDefault.robotoTitleBold.copyWith(fontSize: 20),
+            textAlign: TextAlign.center,
+          ),
+          Form(
+            key: state.keyForm,
+            child: Column(
+              spacing: 8,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                CustomDropdown<CryptoType>(
+                  header: context.s.cryptoType,
+                  items: state.cryptoList,
+                  value: state.selectedItem,
+                  onChanged: (value) {
+                    state.selectedItem = value;
+                  },
+                  validator: (value) {
+                    if (state.selectedItem == null) {
+                      return context.s.fieldRequired;
+                    }
+
+                    return null;
+                  },
+                  dropDownChildItem: [
+                    for (final item in state.cryptoList)
+                      DropdownMenuItem<CryptoType>(
+                        value: item,
+                        child: Row(
+                          spacing: 4,
+                          children: [
+                            SvgPicture.asset(item.cryptoImage(), height: 30),
+                            Text('${item.name} (${item.symbol})'),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 8,
+                  children: [
+                    Expanded(
+                      child: TextFormBoxDefault(
+                        validator: (value) {
+                          if (value == null) {
+                            return context.s.fieldRequired;
+                          }
+
+                          return validateBalanceField(
+                            state.balanceController.text,
+                          );
+                        },
+                        keyboardType: TextInputType.number,
+                        controller: state.balanceController,
+                        focus: state.balanceFocus,
+                        header: context.s.balance,
+                        fillColor: Color(0xffFFF9E6),
+                        hintText: '',
+                      ),
+                    ),
+                    Expanded(
+                      child: TextFormBoxDefault(
+                        validator: (value) {
+                          if (value == null) {
+                            return context.s.fieldRequired;
+                          }
+
+                          return validateBalanceField(
+                            state.cryptoValueController.text,
+                          );
+                        },
+                        keyboardType: TextInputType.number,
+                        controller: state.cryptoValueController,
+                        focus: state.cryptoValueFocus,
+                        header: context.s.cryptoValue,
+                        fillColor: Color(0xffFFF9E6),
+                        hintText: '',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          OutlinedButtonDefault(
+            borderSide: BorderSide(color: AppColors.secondaryGreen, width: 1),
+            onPressed: () {
+              state.registerCard();
+            },
+            borderRadius: BorderRadius.circular(16),
+            color: AppColors.softOrange,
+            splashColor: AppColors.terracottaRed.withAlpha((0.3 * 255).toInt()),
+            padding: EdgeInsets.zero,
+            child: Text(
+              context.s.registerButton,
+              style: TextStylesDefault.robotButtonStyle.copyWith(
+                color: Colors.white,
+                fontSize: 14,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+String? validateBalanceField(String value) {
+  String cleaned = value.replaceAll(RegExp(r'[^\d,]'), '');
+  cleaned = cleaned.replaceAll(',', '.');
+
+  final number = double.tryParse(cleaned);
+
+  if (number == null || number <= 0) {
+    return S.current.fieldRequired;
+  }
+
+  return null;
 }

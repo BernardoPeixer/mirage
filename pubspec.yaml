@@ -47,6 +47,9 @@ dependencies:
   flutter_svg: ^2.2.1
   decimal: ^3.2.4
   http: ^1.5.0
+  dropdown_textfield: ^1.2.0
+  flutter_multi_formatter: ^2.13.10
+  flutter_masked_text2: ^0.9.1
 
 dev_dependencies:
   flutter_test:
