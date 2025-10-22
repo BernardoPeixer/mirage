@@ -7,7 +7,7 @@ class UserInfo {
     required this.id,
     required this.username,
     required this.walletAddress,
-    required this.statusCode,
+    this.statusCode = 0,
     this.createdAt,
     this.modifiedAt,
   });

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mirage/default/routes.dart';
 import 'package:mirage/infrastructure/data_store/repository/webservice/cards_webservice.dart';
 import 'package:mirage/presentation/cards/cards_page.dart';
+import 'package:mirage/presentation/cards/states/cards_page_state.dart';
+import 'package:mirage/presentation/cards/states/cards_register_state.dart';
 import 'package:mirage/presentation/login/login_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mirage/presentation/state/global.dart';
+import 'package:provider/provider.dart';
 
 import 'generated/l10n.dart';
 
@@ -14,7 +17,19 @@ void main() {
   final cardsWebService = CardsWebservice();
   initializeState(cardsWebService);
 
-  runApp(const Application());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CardsRegisterState(useCase: cardsUseCase),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CardsPageState(useCase: cardsUseCase),
+        ),
+      ],
+      child: const Application(),
+    ),
+  );
 }
 
 class Application extends StatelessWidget {

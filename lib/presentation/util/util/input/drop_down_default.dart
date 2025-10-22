@@ -56,6 +56,7 @@ class CustomDropdown<T> extends StatelessWidget {
           const Padding(padding: EdgeInsets.symmetric(vertical: 2)),
         ],
         DropdownButtonFormField<T>(
+          dropdownColor: Color(0xffFFF9E6),
           validator: validator,
           initialValue: value,
           hint: hint != null ? Text(hint!) : null,

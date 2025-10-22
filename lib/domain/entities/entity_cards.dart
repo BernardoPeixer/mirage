@@ -13,19 +13,19 @@ import 'entity_crypto.dart';
 class FestivalCard {
   /// Default constructor
   FestivalCard({
-    required this.id,
+    this.id,
     required this.userInfo,
     required this.balance,
     required this.cryptoType,
     required this.cryptoPrice,
     this.soldAt,
-    required this.statusCode,
+    this.statusCode = 0,
     this.createdAt,
     this.modifiedAt,
   });
 
   /// ID is the unique identifier of the festival card
-  final int id;
+  final int? id;
 
   /// UserInfo contains the information of the card owner
   final UserInfo userInfo;
@@ -98,5 +98,22 @@ class FestivalCard {
       createdAt: createdAt,
       modifiedAt: modifiedAt,
     );
+  }
+
+  /// Converts the current object into a `Map<String, dynamic>`,
+  /// useful for sending data to the backend or storing it locally.
+  ///
+  /// The map includes:
+  /// - `user`: contains only the user's ID.
+  /// - `balance`: the card's current balance.
+  /// - `crypto_type`: contains only the crypto type ID.
+  /// - `crypto_price`: the current crypto price.
+  Map<String, dynamic> toMap() {
+    return {
+      'user': {'id': userInfo.id},
+      'balance': balance.replaceAll(',', '.'),
+      'crypto_type': {'id': cryptoType.id},
+      'crypto_price': cryptoPrice.replaceAll(',', '.'),
+    };
   }
 }

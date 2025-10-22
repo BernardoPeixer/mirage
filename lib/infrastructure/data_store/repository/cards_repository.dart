@@ -1,4 +1,5 @@
 import 'package:mirage/domain/entities/entity_cards.dart';
+import 'package:mirage/domain/entities/entity_crypto.dart';
 import 'package:mirage/infrastructure/data_store/repository/interface/cards_repository_interface.dart';
 import 'package:mirage/infrastructure/data_store/repository/webservice/cards_webservice.dart';
 
@@ -23,11 +24,35 @@ class _CardsRepositoryInterface extends CardsRepository {
 
     final festivalCards = <FestivalCard>[];
 
-    for(final item in response) {
+    for (final item in response) {
       final card = FestivalCard.fromJson(json: item);
       festivalCards.add(card);
     }
 
     return festivalCards;
   }
+
+  /// Fetches all crypto types from the webservice.
+  ///
+  /// Returns a list of [CryptoType].
+  /// Throws [ApiResponseException] if the webservice request fails.
+  @override
+  Future<List<CryptoType>> listAllCryptoTypes() async {
+    final response = await _cardsWebservice.listAllCryptoTypes();
+
+    final cryptoTypes = <CryptoType>[];
+
+    for (final item in response) {
+      final cryptoType = CryptoType.fromJson(json: item);
+      cryptoTypes.add(cryptoType);
+    }
+
+    return cryptoTypes;
+  }
+
+  /// Calls the webservice to register a new festival card.
+  /// Acts as a bridge between the repository and the API layer.
+  @override
+  Future<void> registerCard(FestivalCard card) =>
+      _cardsWebservice.registerCard(card);
 }

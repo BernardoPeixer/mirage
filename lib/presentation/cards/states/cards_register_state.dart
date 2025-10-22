@@ -1,22 +1,28 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
+import 'package:mirage/domain/entities/entity_cards.dart';
 import 'package:mirage/domain/entities/entity_crypto.dart';
+import 'package:mirage/domain/entities/entity_user.dart';
+import 'package:mirage/domain/exception/api_response_exception.dart';
 import 'package:mirage/domain/interfaces/cards_interface.dart';
+
+import '../../../generated/l10n.dart';
 
 /// State management class for the card registration form.
 class CardsRegisterState extends ChangeNotifier {
-  CardsRegisterState({required CardsUseCase useCase}) : _cardsUseCase = useCase;
+  CardsRegisterState({required CardsUseCase useCase})
+    : _cardsUseCase = useCase {
+    unawaited(_init());
+  }
 
   final CardsUseCase _cardsUseCase;
 
   /// =-=-=-=-=-=-=-=-=-=-=-=-=- DECLARATIONS =-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
   /// Predefined list of available cryptocurrencies.
-  final _cryptoList = <CryptoType>[
-    CryptoType(id: 1, symbol: 'BTC', name: 'Bitcoin', statusCode: 0),
-    CryptoType(id: 2, symbol: 'ETH', name: 'Ethereum', statusCode: 0),
-    CryptoType(id: 3, symbol: 'PYUSD', name: 'PayPal USD', statusCode: 0),
-  ];
+  final _cryptoList = <CryptoType>[];
 
   /// Currently selected cryptocurrency.
   CryptoType? _selectedItem;
@@ -32,7 +38,7 @@ class CardsRegisterState extends ChangeNotifier {
   final _cryptoValueController = MoneyMaskedTextController(
     decimalSeparator: ',',
     thousandSeparator: '.',
-    precision: 8
+    precision: 8,
   );
   final _cryptoValueFocus = FocusNode();
 
@@ -75,9 +81,52 @@ class CardsRegisterState extends ChangeNotifier {
 
   /// =-=-=-=-=-=-=-=-=-=-=-=-=- FUNCTIONS =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-  void registerCard() {
-    if (_keyForm.currentState!.validate()) {
-      return;
+  Future<void> _init() async {
+    await listAllCryptoTypes();
+  }
+
+  Future<String?> registerCard() async {
+    if(_selectedItem == null) {
+      return S.current.unexpectedError;
+    }
+
+    try {
+      /// TODO: Use getUser to send user information
+      final card = FestivalCard(
+        userInfo: UserInfo(
+          id: 1,
+          username: 'Bernardo',
+          walletAddress: '456790-iaujsf',
+        ),
+        balance: _balanceController.text,
+        cryptoType: _selectedItem!,
+        cryptoPrice: _cryptoValueController.text,
+      );
+
+      await _cardsUseCase.registerCard(card);
+      notifyListeners();
+      return null;
+    } on ApiResponseException catch (e) {
+      return e.cause;
+    } on Exception {
+      return S.current.unexpectedError;
+    }
+  }
+
+  Future<String?> listAllCryptoTypes() async {
+    try {
+      final response = await _cardsUseCase.listAllCryptoTypes();
+
+      _cryptoList
+        ..clear()
+        ..addAll(response);
+
+      notifyListeners();
+      return null;
+    } on ApiResponseException catch (e) {
+      return e.cause;
+    } on Exception {
+      return S.current.unexpectedError;
     }
   }
 }

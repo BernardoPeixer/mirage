@@ -9,12 +9,10 @@ import 'package:mirage/presentation/cards/states/cards_page_state.dart';
 import 'package:mirage/presentation/cards/states/cards_register_state.dart';
 import 'package:mirage/presentation/state/global.dart';
 import 'package:mirage/presentation/util/util/button/outlined_button_default.dart';
-import 'package:mirage/presentation/util/util/custom_chip_default.dart';
 import 'package:mirage/presentation/util/util/eth_loading_default.dart';
 import 'package:mirage/presentation/util/util/input/drop_down_default.dart';
 import 'package:provider/provider.dart';
 
-import '../../default/app_assets.dart';
 import '../../default/colors.dart';
 import '../../generated/l10n.dart';
 import '../util/util/input/text_form_box_default.dart';
@@ -24,37 +22,36 @@ class CardsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = Provider.of<CardsPageState>(context);
+    final registerState = Provider.of<CardsRegisterState>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.scaffoldColorDefault,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (context) {
-              return Padding(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom,
-                ),
-                child: ChangeNotifierProvider(
-                  create: (context) =>
-                      CardsRegisterState(useCase: cardsUseCase),
-                  child: _RegisterCardBottomSheet(),
-                ),
-              );
-            },
-          );
-        },
-      ),
+      floatingActionButton: state.isLoading
+          ? null
+          : FloatingActionButton(
+              onPressed: () async {
+                final message = await showModalBottomSheet<String?>(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom,
+                      ),
+                      child: _RegisterCardBottomSheet(state: registerState),
+                    );
+                  },
+                );
+
+                if (message == null) {
+                  await state.listAllCards();
+                }
+              },
+            ),
       body: SafeArea(
-        child: Padding(
-          padding: AppPadding.screen,
-          child: ChangeNotifierProvider(
-            create: (context) => CardsPageState(useCase: cardsUseCase),
-            child: _ScreenContent(),
-          ),
-        ),
+        child: Padding(padding: AppPadding.screen, child: _ScreenContent()),
       ),
     );
   }
@@ -205,12 +202,12 @@ class _FestivalCard extends StatelessWidget {
 }
 
 class _RegisterCardBottomSheet extends StatelessWidget {
-  const _RegisterCardBottomSheet({super.key});
+  const _RegisterCardBottomSheet({super.key, required this.state});
+
+  final CardsRegisterState state;
 
   @override
   Widget build(BuildContext context) {
-    final state = Provider.of<CardsRegisterState>(context);
-
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
       height: 300,
@@ -314,8 +311,12 @@ class _RegisterCardBottomSheet extends StatelessWidget {
           ),
           OutlinedButtonDefault(
             borderSide: BorderSide(color: AppColors.secondaryGreen, width: 1),
-            onPressed: () {
-              state.registerCard();
+            onPressed: () async {
+              if (state.keyForm.currentState!.validate()) {
+                final message = await state.registerCard();
+
+                Navigator.pop(context, message);
+              }
             },
             borderRadius: BorderRadius.circular(16),
             color: AppColors.softOrange,

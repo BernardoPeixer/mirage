@@ -57,14 +57,20 @@ class CardsPageState extends ChangeNotifier {
   /// Returns `null` on success, or a localized error message if something goes wrong.
   Future<String?> listAllCards() async {
     try {
+      isLoading = true;
       final response = await _cardsUseCase.listAllCards();
 
-      _cards.addAll(response);
-      notifyListeners();
+      _cards
+        ..clear()
+        ..addAll(response);
+
+      isLoading = false;
       return null;
     } on ApiResponseException catch (e) {
+      isLoading = false;
       return e.cause;
     } on Exception {
+      isLoading = false;
       return S.current.unexpectedError;
     }
   }

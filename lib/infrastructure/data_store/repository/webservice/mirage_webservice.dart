@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class MirageWebService {
   /// Path default to make requests
-  final String domain = 'http://192.168.1.16:8182';
+  final String domain = 'http://192.168.1.193:8182';
 }
 
 /// Print a fail request message
