@@ -31,6 +31,8 @@ class CardsPage extends StatelessWidget {
       floatingActionButton: state.isLoading
           ? null
           : FloatingActionButton(
+              backgroundColor: AppColors.softOrange,
+              child: Center(child: Icon(Icons.add, color: Colors.white)),
               onPressed: () async {
                 final message = await showModalBottomSheet<String?>(
                   context: context,
@@ -202,7 +204,7 @@ class _FestivalCard extends StatelessWidget {
 }
 
 class _RegisterCardBottomSheet extends StatelessWidget {
-  const _RegisterCardBottomSheet({super.key, required this.state});
+  const _RegisterCardBottomSheet({required this.state});
 
   final CardsRegisterState state;
 
@@ -314,7 +316,6 @@ class _RegisterCardBottomSheet extends StatelessWidget {
             onPressed: () async {
               if (state.keyForm.currentState!.validate()) {
                 final message = await state.registerCard();
-
                 Navigator.pop(context, message);
               }
             },
