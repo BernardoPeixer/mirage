@@ -5,6 +5,7 @@ import 'package:mirage/default/colors.dart';
 import 'package:mirage/default/routes.dart';
 import 'package:mirage/default/text_styles.dart';
 import 'package:mirage/extension/context.dart';
+import 'package:reown_appkit/reown_appkit.dart';
 import '../util/util/button/outlined_button_default.dart';
 
 class LoginPage extends StatelessWidget {
@@ -42,7 +43,26 @@ class LoginPage extends StatelessWidget {
                     color: AppColors.secondaryGreen,
                     width: 1,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    final _appKitModal = ReownAppKitModal(
+                      context: context,
+                      projectId: '56c6230f17501e971e9572ac3e6b7d09',
+                      metadata: PairingMetadata(
+                        name: 'FestChain',
+                        description: 'Pagamentos em cripto',
+                        url: 'https://fest-chain.com',
+                        icons: ['https://www.fest-chain.com/assets/festchain-logo-BZ2JMyrZ.png'],
+                        redirect: Redirect(
+                          native: 'festchain://',
+                          universal: 'https://festchain.com',
+                          linkMode: true,
+                        ),
+                      ),
+                    );
+
+                    await _appKitModal.init();
+                    await _appKitModal.openModalView();
+
                     Navigator.of(context).pushNamed(AppRoutes.cardsRoute);
                   },
                   borderRadius: BorderRadius.circular(16),
