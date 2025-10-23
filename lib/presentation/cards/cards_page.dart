@@ -4,11 +4,13 @@ import 'package:mirage/default/padding.dart';
 import 'package:mirage/default/text_styles.dart';
 import 'package:mirage/domain/entities/entity_cards.dart';
 import 'package:mirage/domain/entities/entity_crypto.dart';
+import 'package:mirage/domain/exception/api_response_exception.dart';
 import 'package:mirage/extension/context.dart';
 import 'package:mirage/presentation/cards/states/cards_page_state.dart';
 import 'package:mirage/presentation/cards/states/cards_register_state.dart';
 import 'package:mirage/presentation/state/global.dart';
 import 'package:mirage/presentation/util/util/button/outlined_button_default.dart';
+import 'package:mirage/presentation/util/util/custom_snack_bar.dart';
 import 'package:mirage/presentation/util/util/eth_loading_default.dart';
 import 'package:mirage/presentation/util/util/input/drop_down_default.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +36,7 @@ class CardsPage extends StatelessWidget {
               backgroundColor: AppColors.softOrange,
               child: Center(child: Icon(Icons.add, color: Colors.white)),
               onPressed: () async {
-                final message = await showModalBottomSheet<String?>(
+                final result = await showModalBottomSheet<RegisterResult>(
                   context: context,
                   isScrollControlled: true,
                   builder: (context) {
@@ -47,8 +49,18 @@ class CardsPage extends StatelessWidget {
                   },
                 );
 
-                if (message == null) {
+                if (result != null && result.success) {
                   await state.listAllCards();
+
+                  showSnackBarDefault(
+                    context: context,
+                    message: context.s.cardListedSuccessfully,
+                  );
+                } else {
+                  showSnackBarDefault(
+                    context: context,
+                    message: result?.message ?? context.s.unexpectedError,
+                  );
                 }
               },
             ),
@@ -316,7 +328,14 @@ class _RegisterCardBottomSheet extends StatelessWidget {
             onPressed: () async {
               if (state.keyForm.currentState!.validate()) {
                 final message = await state.registerCard();
-                Navigator.pop(context, message);
+                state.clearFields();
+
+                final result = RegisterResult(
+                  success: message == null,
+                  message: message,
+                );
+
+                Navigator.pop(context, result);
               }
             },
             borderRadius: BorderRadius.circular(16),

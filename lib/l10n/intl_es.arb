@@ -11,5 +11,6 @@
   "cryptoType": "Tipo de cripto",
   "cardRegistration": "Registro de tarjeta",
   "registerButton": "Cadastrar",
-  "fieldRequired": "Campo obligatorio"
+  "fieldRequired": "Campo obligatorio",
+  "cardListedSuccessfully": "¡Tarjeta anunciada con éxito!"
 }

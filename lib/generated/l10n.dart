@@ -148,6 +148,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Card listed successfully!`
+  String get cardListedSuccessfully {
+    return Intl.message(
+      'Card listed successfully!',
+      name: 'cardListedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

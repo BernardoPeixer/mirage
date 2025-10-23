@@ -25,6 +25,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "available": MessageLookupByLibrary.simpleMessage("Disponible"),
     "balance": MessageLookupByLibrary.simpleMessage("Saldo"),
     "buyNowButton": MessageLookupByLibrary.simpleMessage("Comprar ahora"),
+    "cardListedSuccessfully": MessageLookupByLibrary.simpleMessage(
+      "¡Tarjeta anunciada con éxito!",
+    ),
     "cardRegistration": MessageLookupByLibrary.simpleMessage(
       "Registro de tarjeta",
     ),

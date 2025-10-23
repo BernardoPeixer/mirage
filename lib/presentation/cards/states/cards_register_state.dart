@@ -11,7 +11,14 @@ import 'package:mirage/domain/interfaces/cards_interface.dart';
 import '../../../generated/l10n.dart';
 
 /// State management class for the card registration form.
+///
+/// Manages form controllers, selected cryptocurrency, list of available
+/// crypto types, and communicates with [CardsUseCase] to register a card
+/// or fetch crypto types. Notifies listeners on state changes.
 class CardsRegisterState extends ChangeNotifier {
+  /// Constructor that initializes the state with a [CardsUseCase].
+  ///
+  /// Automatically triggers [_init] to fetch all available crypto types.
   CardsRegisterState({required CardsUseCase useCase})
     : _cardsUseCase = useCase {
     unawaited(_init());
@@ -81,17 +88,21 @@ class CardsRegisterState extends ChangeNotifier {
 
   /// =-=-=-=-=-=-=-=-=-=-=-=-=- FUNCTIONS =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+  /// Initializes the state by fetching all available crypto types.
   Future<void> _init() async {
     await listAllCryptoTypes();
   }
 
+  /// Registers a new card using the current form values.
+  ///
+  /// Returns `null` on success, or an error message string if registration fails.
   Future<String?> registerCard() async {
     if(_selectedItem == null) {
       return S.current.unexpectedError;
     }
 
     try {
-      /// TODO: Use getUser to send user information
+      /// TODO: Replace hardcoded user info with real user data
       final card = FestivalCard(
         userInfo: UserInfo(
           id: 1,
@@ -113,6 +124,17 @@ class CardsRegisterState extends ChangeNotifier {
     }
   }
 
+  /// Clears all form fields and resets the selected cryptocurrency.
+  void clearFields() {
+    _balanceController.clear();
+    _cryptoValueController.clear();
+    _selectedItem = null;
+    notifyListeners();
+  }
+
+  /// Fetches all available cryptocurrency types from the use case.
+  ///
+  /// Returns `null` on success, or an error message string if the fetch fails.
   Future<String?> listAllCryptoTypes() async {
     try {
       final response = await _cardsUseCase.listAllCryptoTypes();

@@ -40,3 +40,19 @@ class ApiResponseException implements Exception {
   /// Return the internal code exception
   String get code => _code;
 }
+
+/// Represents the result of a card registration operation.
+///
+/// This class indicates whether the registration was successful and provides
+/// an optional message with additional information or error details.
+class RegisterResult {
+  RegisterResult({required this.success, this.message});
+
+  /// Indicates whether the registration was successful.
+  final bool success;
+
+  /// Optional message describing additional details about the operation,
+  /// such as an error reason or success confirmation.
+  final String? message;
+}
+

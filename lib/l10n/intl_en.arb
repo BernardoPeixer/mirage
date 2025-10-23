@@ -11,5 +11,6 @@
   "cryptoType": "Crypto type",
   "cardRegistration": "Card registration",
   "registerButton": "Register",
-  "fieldRequired": "This field is required"
+  "fieldRequired": "This field is required",
+  "cardListedSuccessfully": "Card listed successfully!"
 }
