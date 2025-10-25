@@ -50,7 +50,9 @@ dependencies:
   dropdown_textfield: ^1.2.0
   flutter_multi_formatter: ^2.13.10
   flutter_masked_text2: ^0.9.1
-  reown_appkit: ^1.7.0
+  url_launcher: ^6.3.2
+  walletconnect_flutter_v2: ^2.4.1
+  web3dart: ^2.5.0
 
 
 dev_dependencies:
