@@ -1,6 +1,6 @@
 <div align="center">
   <h1 align="center">
-    <img src="https://github.com/Peixer/ethGlobal-sc/blob/ecd2aaf948b2e4df6871792112aaf4c008819a33/logo.png" alt="Atlas Logo" width="200">
+    <img src="https://github.com/BernardoPeixer/mirage/blob/314d322b234e7a7ac9e6a76a24d35f4df19d88c2/logo.png" alt="Atlas Logo" width="200">
   </h1> 
   <h3>◦ Buy, manage, and use consumption cards seamlessly at the festival. Powered by blockchain for instant, secure transactions.</h3>
 </div>
