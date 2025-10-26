@@ -16,5 +16,6 @@
   "walletConnectionFailed": "No se pudo conectar a tu billetera",
   "userRegistrationFailed": "Error al registrar usuario",
   "loading": "Cargando...",
-  "userRegisteredSuccessfully": "¡Usuario registrado con éxito!"
+  "userRegisteredSuccessfully": "¡Usuario registrado con éxito!",
+  "walletConnectedSuccessfully": "Billetera conectada con éxito"
 }

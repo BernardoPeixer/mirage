@@ -16,5 +16,6 @@
   "walletConnectionFailed": "Não foi possível se conectar à sua carteira",
   "userRegistrationFailed": "Erro ao registrar usuário",
   "loading": "Carregando...",
-  "userRegisteredSuccessfully": "Usuário registrado com sucesso!"
+  "userRegisteredSuccessfully": "Usuário registrado com sucesso!",
+  "walletConnectedSuccessfully": "Carteira conectada com sucesso"
 }

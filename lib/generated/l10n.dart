@@ -193,6 +193,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Wallet connected successfully`
+  String get walletConnectedSuccessfully {
+    return Intl.message(
+      'Wallet connected successfully',
+      name: 'walletConnectedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

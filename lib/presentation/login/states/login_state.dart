@@ -45,16 +45,20 @@ class LoginState extends ChangeNotifier {
     return RegisterResult(success: true);
   }
 
-  Future<bool> checkUser(String walletAddress) async {
+  Future<(bool, RegisterResult)> checkUser(String walletAddress) async {
     buttonLoading = true;
     bool validUser = false;
 
     try {
       validUser = await _userUseCase.checkUser(walletAddress);
+      return (validUser, RegisterResult(success: true));
     } on Exception {
       buttonLoading = false;
     }
 
-    return validUser;
+    return (
+      validUser,
+      RegisterResult(success: false, message: S.current.unexpectedError),
+    );
   }
 }

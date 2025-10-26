@@ -53,6 +53,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "userRegistrationFailed": MessageLookupByLibrary.simpleMessage(
       "Failed to register user",
     ),
+    "walletConnectedSuccessfully": MessageLookupByLibrary.simpleMessage(
+      "Wallet connected successfully",
+    ),
     "walletConnectionFailed": MessageLookupByLibrary.simpleMessage(
       "Could not connect to your wallet",
     ),

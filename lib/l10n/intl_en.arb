@@ -16,5 +16,6 @@
   "walletConnectionFailed": "Could not connect to your wallet",
   "userRegistrationFailed": "Failed to register user",
   "loading": "Loading...",
-  "userRegisteredSuccessfully": "User registered successfully!"
+  "userRegisteredSuccessfully": "User registered successfully!",
+  "walletConnectedSuccessfully": "Wallet connected successfully"
 }

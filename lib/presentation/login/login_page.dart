@@ -4,6 +4,7 @@ import 'package:mirage/default/app_assets.dart';
 import 'package:mirage/default/colors.dart';
 import 'package:mirage/default/routes.dart';
 import 'package:mirage/default/text_styles.dart';
+import 'package:mirage/domain/exception/api_response_exception.dart';
 import 'package:mirage/extension/context.dart';
 import 'package:mirage/presentation/login/states/login_state.dart';
 import 'package:mirage/presentation/state/wallet_state.dart';
@@ -75,7 +76,7 @@ class _ConnectWalletButton extends StatelessWidget {
             if (result.message != null) {
               showSnackBarDefault(
                 context: context,
-                message: result.message ?? context.s.unexpectedError,
+                message: result.message!,
                 isError: true,
               );
 
@@ -84,10 +85,34 @@ class _ConnectWalletButton extends StatelessWidget {
             }
 
             final walletAddress = walletState.walletAddress ?? '';
-            final validUser = await loginState.checkUser(walletAddress);
+
+            final (bool validUser, RegisterResult checkResult) =
+                await loginState.checkUser(walletAddress);
+
+            if (checkResult.message != null) {
+              showSnackBarDefault(
+                context: context,
+                message: checkResult.message!,
+                isError: true,
+              );
+
+              return;
+            }
 
             if (!validUser) {
-              await loginState.registerUser(walletAddress);
+              final registerResult = await loginState.registerUser(
+                walletAddress,
+              );
+
+              if (registerResult.message != null) {
+                showSnackBarDefault(
+                  context: context,
+                  message: registerResult.message!,
+                  isError: true,
+                );
+
+                return;
+              }
 
               showSnackBarDefault(
                 context: context,
@@ -96,6 +121,11 @@ class _ConnectWalletButton extends StatelessWidget {
             }
 
             loginState.buttonLoading = false;
+
+            showSnackBarDefault(
+              context: context,
+              message: context.s.walletConnectedSuccessfully,
+            );
 
             Navigator.pushNamed(context, AppRoutes.cardsRoute);
           },

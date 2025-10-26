@@ -51,6 +51,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "userRegistrationFailed": MessageLookupByLibrary.simpleMessage(
       "Error al registrar usuario",
     ),
+    "walletConnectedSuccessfully": MessageLookupByLibrary.simpleMessage(
+      "Billetera conectada con éxito",
+    ),
     "walletConnectionFailed": MessageLookupByLibrary.simpleMessage(
       "No se pudo conectar a tu billetera",
     ),
