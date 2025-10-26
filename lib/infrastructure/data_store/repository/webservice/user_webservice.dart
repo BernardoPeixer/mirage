@@ -24,7 +24,30 @@ class UserWebservice extends MirageWebService {
         throw ApiResponseException(response);
       }
 
-      logSuccess(url, 'Success on request list cards');
+      logSuccess(url, 'Success on register user');
+    } on Exception catch (e) {
+      logException(url, e);
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>?> checkUser(String walletAddress) async {
+    final url = '$domain/api/user/checkUser';
+    final uri = Uri.parse(url);
+
+    try {
+      final response = await http.post(
+        uri,
+        body: jsonEncode({'wallet_address': walletAddress}),
+      );
+
+      if (response.statusCode != 200) {
+        logFail(response, url);
+        throw ApiResponseException(response);
+      }
+
+      logSuccess(url, 'Success on check user');
+      return jsonDecode(response.body);
     } on Exception catch (e) {
       logException(url, e);
       rethrow;

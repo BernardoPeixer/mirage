@@ -9,6 +9,7 @@ import 'package:mirage/presentation/login/login_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mirage/presentation/login/states/login_state.dart';
 import 'package:mirage/presentation/state/global.dart';
+import 'package:mirage/presentation/state/wallet_state.dart';
 import 'package:provider/provider.dart';
 
 import 'generated/l10n.dart';
@@ -36,6 +37,9 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => LoginState(useCase: userUseCase),
         ),
+        ChangeNotifierProvider(
+          create: (context) => WalletState(),
+        ),
       ],
       child: const Application(),
     ),
@@ -54,6 +58,7 @@ class Application extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
+      locale: Locale('en'),
       supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       title: 'FestChain',

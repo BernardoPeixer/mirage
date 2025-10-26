@@ -4,6 +4,9 @@ class Constants {
   /// wallet address of the user
   static String walletAddress = 'wallet_address';
 
+  /// reown project ID
+  static String reownProjectId = '56c6230f17501e971e9572ac3e6b7d09';
+
   /// this method return the token from [FlutterSecureStorage]
   static Future<String> getWalletAddress() async {
     final token = await const FlutterSecureStorage().read(

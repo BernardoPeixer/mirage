@@ -158,6 +158,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Could not connect to your wallet`
+  String get walletConnectionFailed {
+    return Intl.message(
+      'Could not connect to your wallet',
+      name: 'walletConnectionFailed',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

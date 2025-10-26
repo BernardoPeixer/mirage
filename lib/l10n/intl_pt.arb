@@ -12,5 +12,6 @@
   "cardRegistration": "Cadastro de cartão",
   "registerButton": "Cadastrar",
   "fieldRequired": "Campo obrigatório",
-  "cardListedSuccessfully": "Cartão anunciado com sucesso!"
+  "cardListedSuccessfully": "Cartão anunciado com sucesso!",
+  "walletConnectionFailed": "Não foi possível se conectar à sua carteira"
 }

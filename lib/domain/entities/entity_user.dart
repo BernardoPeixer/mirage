@@ -4,8 +4,8 @@ import '../../presentation/util/util/date_time_format.dart';
 class UserInfo {
   /// Constructor default
   UserInfo({
-    required this.id,
-    required this.username,
+    this.id,
+    this.username,
     required this.walletAddress,
     this.statusCode = 0,
     this.createdAt,
@@ -13,10 +13,10 @@ class UserInfo {
   });
 
   /// ID is the unique identifier of the user
-  final int id;
+  final int? id;
 
   /// Username is the user's name or handle
-  final String username;
+  final String? username;
 
   /// WalletAddress is the blockchain wallet address of the user
   final String walletAddress;

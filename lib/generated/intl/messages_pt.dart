@@ -44,5 +44,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "registerButton": MessageLookupByLibrary.simpleMessage("Cadastrar"),
     "unavailable": MessageLookupByLibrary.simpleMessage("Indisponível"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage("Erro inesperado"),
+    "walletConnectionFailed": MessageLookupByLibrary.simpleMessage(
+      "Não foi possível se conectar à sua carteira",
+    ),
   };
 }

@@ -5,6 +5,9 @@ import 'package:mirage/default/colors.dart';
 import 'package:mirage/default/routes.dart';
 import 'package:mirage/default/text_styles.dart';
 import 'package:mirage/extension/context.dart';
+import 'package:mirage/presentation/state/wallet_state.dart';
+import 'package:mirage/presentation/util/util/custom_snack_bar.dart';
+import 'package:provider/provider.dart';
 import '../util/util/button/outlined_button_default.dart';
 
 class LoginPage extends StatelessWidget {
@@ -12,6 +15,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final walletState = Provider.of<WalletState>(context);
+
     return Scaffold(
       backgroundColor: AppColors.scaffoldColorDefault,
       body: SafeArea(
@@ -38,9 +43,25 @@ class LoginPage extends StatelessWidget {
               child: SizedBox(
                 width: 200,
                 child: OutlinedButtonDefault(
-                  borderSide: BorderSide(color: AppColors.secondaryGreen, width: 1),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(AppRoutes.cardsRoute);
+                  borderSide: BorderSide(
+                    color: AppColors.secondaryGreen,
+                    width: 1,
+                  ),
+                  onPressed: () async {
+                    final result = await walletState.openModalVisual(context);
+
+                    if (result.message != null) {
+                      showSnackBarDefault(
+                        context: context,
+                        message: result.message ?? context.s.unexpectedError,
+                      );
+
+                      return;
+                    }
+
+                    if(result.success) {
+
+                    }
                   },
                   borderRadius: BorderRadius.circular(16),
                   color: AppColors.softOrange,
