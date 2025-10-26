@@ -45,7 +45,7 @@ class CardsRegisterState extends ChangeNotifier {
   final _cryptoValueController = MoneyMaskedTextController(
     decimalSeparator: ',',
     thousandSeparator: '.',
-    precision: 8,
+    precision: 6,
   );
   final _cryptoValueFocus = FocusNode();
 

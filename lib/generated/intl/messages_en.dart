@@ -43,7 +43,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "fieldRequired": MessageLookupByLibrary.simpleMessage(
       "This field is required",
     ),
+    "insufficientBalance": MessageLookupByLibrary.simpleMessage(
+      "Insufficient balance",
+    ),
     "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
+    "loadingCards": MessageLookupByLibrary.simpleMessage("Loading cards..."),
+    "noCardFound": MessageLookupByLibrary.simpleMessage("No card found"),
     "registerButton": MessageLookupByLibrary.simpleMessage("Register"),
     "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage("Unexpected error"),

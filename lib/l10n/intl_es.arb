@@ -17,5 +17,8 @@
   "userRegistrationFailed": "Error al registrar usuario",
   "loading": "Cargando...",
   "userRegisteredSuccessfully": "¡Usuario registrado con éxito!",
-  "walletConnectedSuccessfully": "Billetera conectada con éxito"
+  "walletConnectedSuccessfully": "Billetera conectada con éxito",
+  "noCardFound": "Ninguna tarjeta encontrada",
+  "loadingCards": "Cargando tarjetas...",
+  "insufficientBalance": "Saldo insuficiente"
 }

@@ -41,7 +41,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "cryptoType": MessageLookupByLibrary.simpleMessage("Tipo de cripto"),
     "cryptoValue": MessageLookupByLibrary.simpleMessage("Valor de cripto"),
     "fieldRequired": MessageLookupByLibrary.simpleMessage("Campo obligatorio"),
+    "insufficientBalance": MessageLookupByLibrary.simpleMessage(
+      "Saldo insuficiente",
+    ),
     "loading": MessageLookupByLibrary.simpleMessage("Cargando..."),
+    "loadingCards": MessageLookupByLibrary.simpleMessage(
+      "Cargando tarjetas...",
+    ),
+    "noCardFound": MessageLookupByLibrary.simpleMessage(
+      "Ninguna tarjeta encontrada",
+    ),
     "registerButton": MessageLookupByLibrary.simpleMessage("Cadastrar"),
     "unavailable": MessageLookupByLibrary.simpleMessage("No disponible"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage("Error inesperado"),

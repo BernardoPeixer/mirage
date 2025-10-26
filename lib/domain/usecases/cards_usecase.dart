@@ -29,4 +29,10 @@ class _CardsInterface extends CardsUseCase {
   @override
   Future<void> registerCard(FestivalCard card) =>
       cardsRepository.registerCard(card);
+
+  /// Executes the use case to finalize a festival card transaction.
+  /// Delegates the operation to the [cardsRepository].
+  @override
+  Future<void> finishTransactionCard(int cardId) =>
+      cardsRepository.finishTransactionCard(cardId);
 }

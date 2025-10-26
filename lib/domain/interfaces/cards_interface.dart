@@ -20,4 +20,8 @@ abstract class CardsUseCase {
   /// Registers the provided [FestivalCard].
   /// Implementation is left to the concrete class.
   Future<void> registerCard(FestivalCard card);
+
+  /// Use case method to finalize a festival card transaction.
+  /// Returns a [Future] that completes when the transaction is finished.
+  Future<void> finishTransactionCard(int cardId);
 }

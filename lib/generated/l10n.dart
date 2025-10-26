@@ -203,6 +203,36 @@ class S {
       args: [],
     );
   }
+
+  /// `No card found`
+  String get noCardFound {
+    return Intl.message(
+      'No card found',
+      name: 'noCardFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading cards...`
+  String get loadingCards {
+    return Intl.message(
+      'Loading cards...',
+      name: 'loadingCards',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Insufficient balance`
+  String get insufficientBalance {
+    return Intl.message(
+      'Insufficient balance',
+      name: 'insufficientBalance',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

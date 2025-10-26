@@ -17,9 +17,6 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final walletState = Provider.of<WalletState>(context);
-    final loginState = Provider.of<LoginState>(context);
-
     return Scaffold(
       backgroundColor: AppColors.scaffoldColorDefault,
       body: SafeArea(

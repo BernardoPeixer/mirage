@@ -16,4 +16,8 @@ abstract class CardsRepository {
   /// Registers a new festival card.
   /// Implementation should handle sending the card data to the backend.
   Future<void> registerCard(FestivalCard card);
+
+  /// Finalizes a transaction for the specified festival card.
+  /// Returns a [Future] that completes when the operation is done.
+  Future<void> finishTransactionCard(int cardId);
 }

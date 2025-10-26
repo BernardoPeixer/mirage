@@ -77,4 +77,23 @@ class CardsWebservice extends MirageWebService {
       rethrow;
     }
   }
+
+  Future<void> finishTransactionCard(int cardId) async {
+    final url = '$domain/api/cards/finish/$cardId';
+    final uri = Uri.parse(url);
+
+    try {
+      final response = await http.post(uri);
+
+      if (response.statusCode != 200) {
+        logFail(response, url);
+        throw ApiResponseException(response);
+      }
+
+      logSuccess(url, 'Success on finish card transaction');
+    } on Exception catch (e) {
+      logException(url, e);
+      rethrow;
+    }
+  }
 }

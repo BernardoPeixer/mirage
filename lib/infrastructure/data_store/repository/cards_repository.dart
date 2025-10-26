@@ -55,4 +55,10 @@ class _CardsRepositoryInterface extends CardsRepository {
   @override
   Future<void> registerCard(FestivalCard card) =>
       _cardsWebservice.registerCard(card);
+
+  /// Finalizes a festival card transaction by calling the webservice.
+  /// Acts as a bridge between the repository and the API layer.
+  @override
+  Future<void> finishTransactionCard(int cardId) =>
+      _cardsWebservice.finishTransactionCard(cardId);
 }

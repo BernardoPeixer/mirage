@@ -8,7 +8,7 @@ import 'package:mirage/domain/exception/api_response_exception.dart';
 import 'package:mirage/extension/context.dart';
 import 'package:mirage/presentation/cards/states/cards_page_state.dart';
 import 'package:mirage/presentation/cards/states/cards_register_state.dart';
-import 'package:mirage/presentation/state/global.dart';
+import 'package:mirage/presentation/state/wallet_state.dart';
 import 'package:mirage/presentation/util/util/button/outlined_button_default.dart';
 import 'package:mirage/presentation/util/util/custom_snack_bar.dart';
 import 'package:mirage/presentation/util/util/eth_loading_default.dart';
@@ -25,48 +25,57 @@ class CardsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = Provider.of<CardsPageState>(context);
-    final registerState = Provider.of<CardsRegisterState>(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.scaffoldColorDefault,
-      floatingActionButton: state.isLoading
-          ? null
-          : FloatingActionButton(
-              backgroundColor: AppColors.softOrange,
-              child: Center(child: Icon(Icons.add, color: Colors.white)),
-              onPressed: () async {
-                final result = await showModalBottomSheet<RegisterResult>(
-                  context: context,
-                  isScrollControlled: true,
-                  builder: (context) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom,
-                      ),
-                      child: _RegisterCardBottomSheet(state: registerState),
-                    );
-                  },
-                );
-
-                if (result != null && result.success) {
-                  await state.listAllCards();
-
-                  showSnackBarDefault(
-                    context: context,
-                    message: context.s.cardListedSuccessfully,
-                  );
-                } else {
-                  showSnackBarDefault(
-                    context: context,
-                    message: result?.message ?? context.s.unexpectedError,
-                  );
-                }
-              },
-            ),
+      floatingActionButton: state.isLoading ? null : _AddFestivalCardFAB(),
       body: SafeArea(
         child: Padding(padding: AppPadding.screen, child: _ScreenContent()),
       ),
+    );
+  }
+}
+
+class _AddFestivalCardFAB extends StatelessWidget {
+  const _AddFestivalCardFAB();
+
+  @override
+  Widget build(BuildContext context) {
+    final state = Provider.of<CardsPageState>(context);
+    final registerState = Provider.of<CardsRegisterState>(context);
+
+    return FloatingActionButton(
+      backgroundColor: AppColors.softOrange,
+      child: Center(child: Icon(Icons.add, color: Colors.white)),
+      onPressed: () async {
+        final result = await showModalBottomSheet<RegisterResult>(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) {
+            return Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: _RegisterCardBottomSheet(state: registerState),
+            );
+          },
+        );
+
+        if (result != null && result.success) {
+          await state.listAllCards();
+
+          showSnackBarDefault(
+            context: context,
+            message: context.s.cardListedSuccessfully,
+          );
+        } else {
+          showSnackBarDefault(
+            context: context,
+            message: result?.message ?? context.s.unexpectedError,
+          );
+        }
+      },
     );
   }
 }
@@ -77,9 +86,39 @@ class _ScreenContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = Provider.of<CardsPageState>(context);
+    final walletState = Provider.of<WalletState>(context);
 
     if (state.isLoading) {
-      return EthereumLoadingDefault(loadingText: 'Carregando anúncios...');
+      return EthereumLoadingDefault(loadingText: context.s.loadingCards);
+    }
+
+    if (state.cards.isEmpty) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Text(
+              'Festival Cards',
+              style: TextStylesDefault.robotoTitleBold.copyWith(
+                fontSize: 24,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: Text(
+                context.s.noCardFound,
+                style: TextStylesDefault.robotoTitleBold.copyWith(
+                  fontSize: 18,
+                  color: Color(0xffA8744F),
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
     }
 
     return SingleChildScrollView(
@@ -100,7 +139,29 @@ class _ScreenContent extends StatelessWidget {
           for (final item in state.cards)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
-              child: _FestivalCard(card: item, onPressed: () {}),
+              child: _FestivalCard(
+                card: item,
+                onPressed: () async {
+                  debugPrint('Clicou no botão');
+                  final result = await walletState.transferPYUSD(item);
+                  debugPrint('Resultado: success=${result.success}, message=${result.message}');
+
+                  if (result.message != null) {
+                    showSnackBarDefault(
+                      context: context,
+                      message: result.message!,
+                      isError: true,
+                    );
+
+                    return;
+                  }
+
+                  showSnackBarDefault(
+                    context: context,
+                    message: 'Sucesso na compra do cartão!',
+                  );
+                },
+              ),
             ),
         ],
       ),

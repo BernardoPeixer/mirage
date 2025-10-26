@@ -17,5 +17,8 @@
   "userRegistrationFailed": "Failed to register user",
   "loading": "Loading...",
   "userRegisteredSuccessfully": "User registered successfully!",
-  "walletConnectedSuccessfully": "Wallet connected successfully"
+  "walletConnectedSuccessfully": "Wallet connected successfully",
+  "noCardFound": "No card found",
+  "loadingCards": "Loading cards...",
+  "insufficientBalance": "Insufficient balance"
 }
