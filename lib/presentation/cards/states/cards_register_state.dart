@@ -97,7 +97,7 @@ class CardsRegisterState extends ChangeNotifier {
   ///
   /// Returns `null` on success, or an error message string if registration fails.
   Future<String?> registerCard() async {
-    if(_selectedItem == null) {
+    if (_selectedItem == null) {
       return S.current.unexpectedError;
     }
 

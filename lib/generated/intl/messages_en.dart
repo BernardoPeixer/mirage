@@ -24,9 +24,15 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "available": MessageLookupByLibrary.simpleMessage("Available"),
     "balance": MessageLookupByLibrary.simpleMessage("Balance"),
+    "balanceApprovedSuccess": MessageLookupByLibrary.simpleMessage(
+      "Balance approved successfully!",
+    ),
     "buyNowButton": MessageLookupByLibrary.simpleMessage("Buy now"),
     "cardListedSuccessfully": MessageLookupByLibrary.simpleMessage(
       "Card listed successfully!",
+    ),
+    "cardPurchaseSuccess": MessageLookupByLibrary.simpleMessage(
+      "Card purchase successful!",
     ),
     "cardRegistration": MessageLookupByLibrary.simpleMessage(
       "Card registration",
@@ -49,7 +55,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
     "loadingCards": MessageLookupByLibrary.simpleMessage("Loading cards..."),
     "noCardFound": MessageLookupByLibrary.simpleMessage("No card found"),
+    "redirectingToBalanceApproval": MessageLookupByLibrary.simpleMessage(
+      "Redirecting for balance approval...",
+    ),
     "registerButton": MessageLookupByLibrary.simpleMessage("Register"),
+    "transactionNotCompleted": MessageLookupByLibrary.simpleMessage(
+      "The transaction was not completed",
+    ),
+    "transferInProgress": MessageLookupByLibrary.simpleMessage(
+      "Transfer in progress...",
+    ),
     "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage("Unexpected error"),
     "userRegisteredSuccessfully": MessageLookupByLibrary.simpleMessage(

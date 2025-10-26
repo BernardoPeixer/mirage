@@ -74,4 +74,14 @@ class CardsPageState extends ChangeNotifier {
       return S.current.unexpectedError;
     }
   }
+
+  Future<RegisterResult> finishTransactionCard(int cardId) async {
+    try {
+      await _cardsUseCase.finishTransactionCard(cardId);
+      await listAllCards();
+      return RegisterResult(success: true);
+    } on Exception {
+      return RegisterResult(success: false, message: S.current.unexpectedError);
+    }
+  }
 }

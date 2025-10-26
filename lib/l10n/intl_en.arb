@@ -20,5 +20,10 @@
   "walletConnectedSuccessfully": "Wallet connected successfully",
   "noCardFound": "No card found",
   "loadingCards": "Loading cards...",
-  "insufficientBalance": "Insufficient balance"
+  "insufficientBalance": "Insufficient balance",
+  "cardPurchaseSuccess": "Card purchase successful!",
+  "redirectingToBalanceApproval": "Redirecting for balance approval...",
+  "transactionNotCompleted": "The transaction was not completed",
+  "balanceApprovedSuccess": "Balance approved successfully!",
+  "transferInProgress": "Transfer in progress...",
 }

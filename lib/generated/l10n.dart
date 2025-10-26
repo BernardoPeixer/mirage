@@ -233,6 +233,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Card purchase successful!`
+  String get cardPurchaseSuccess {
+    return Intl.message(
+      'Card purchase successful!',
+      name: 'cardPurchaseSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Redirecting for balance approval...`
+  String get redirectingToBalanceApproval {
+    return Intl.message(
+      'Redirecting for balance approval...',
+      name: 'redirectingToBalanceApproval',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The transaction was not completed`
+  String get transactionNotCompleted {
+    return Intl.message(
+      'The transaction was not completed',
+      name: 'transactionNotCompleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Balance approved successfully!`
+  String get balanceApprovedSuccess {
+    return Intl.message(
+      'Balance approved successfully!',
+      name: 'balanceApprovedSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transfer in progress...`
+  String get transferInProgress {
+    return Intl.message(
+      'Transfer in progress...',
+      name: 'transferInProgress',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

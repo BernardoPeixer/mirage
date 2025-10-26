@@ -5,6 +5,7 @@ import 'package:mirage/core/wallet_service.dart';
 import 'package:mirage/default/constants.dart';
 import 'package:mirage/domain/entities/entity_cards.dart';
 import 'package:mirage/extension/context.dart';
+import 'package:mirage/presentation/util/util/custom_snack_bar.dart';
 import 'package:reown_appkit/reown_appkit.dart';
 import '../../domain/exception/api_response_exception.dart';
 import '../../generated/l10n.dart';
@@ -143,7 +144,10 @@ class WalletState extends ChangeNotifier {
 
   /// Transfers PYUSD to the recipient from [card].
   /// Checks balance and allowance first, automatically approves if needed.
-  Future<RegisterResult> transferPYUSD(FestivalCard card) async {
+  Future<RegisterResult> transferPYUSD(
+    FestivalCard card,
+    BuildContext context,
+  ) async {
     try {
       await initWalletService(_appKitModal!);
 
@@ -177,23 +181,54 @@ class WalletState extends ChangeNotifier {
 
       BigInt currentAllowance = await getAllowance(Constants.mediatorContract);
       if (currentAllowance < amount) {
-        await _walletService!.approveSpenderModal(
+        showSnackBarDefault(
+          context: context,
+          message: context.s.redirectingToBalanceApproval,
+          backgroundColor: Colors.blueAccent,
+        );
+
+        final tx = await _walletService!.approveSpenderModal(
           spender: Constants.mediatorContract,
           amount: maxApproval,
           chainId: Constants.chainId,
           tokenAddress: Constants.pyusdToken,
         );
+
+        if (tx == null) {
+          return RegisterResult(
+            success: false,
+            message: context.s.transactionNotCompleted,
+          );
+        }
+
+        showSnackBarDefault(
+          context: context,
+          message: context.s.balanceApprovedSuccess,
+        );
       }
 
-      await _walletService!.transferPYUSD(
+      showSnackBarDefault(
+        context: context,
+        message: context.s.transferInProgress,
+        backgroundColor: Colors.blueAccent,
+      );
+
+      final tx = await _walletService!.transferPYUSD(
         mediatorContract: Constants.mediatorContract,
         recipient: card.userInfo.walletAddress,
         amount: amount,
         chainId: Constants.chainId,
       );
 
+      if (tx == null) {
+        return RegisterResult(
+          success: false,
+          message: context.s.transactionNotCompleted,
+        );
+      }
+
       return RegisterResult(success: true);
-    } catch (e, st) {
+    } catch (e) {
       return RegisterResult(success: false, message: S.current.unexpectedError);
     }
   }

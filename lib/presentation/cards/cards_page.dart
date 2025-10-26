@@ -8,6 +8,7 @@ import 'package:mirage/domain/exception/api_response_exception.dart';
 import 'package:mirage/extension/context.dart';
 import 'package:mirage/presentation/cards/states/cards_page_state.dart';
 import 'package:mirage/presentation/cards/states/cards_register_state.dart';
+import 'package:mirage/presentation/state/global.dart';
 import 'package:mirage/presentation/state/wallet_state.dart';
 import 'package:mirage/presentation/util/util/button/outlined_button_default.dart';
 import 'package:mirage/presentation/util/util/custom_snack_bar.dart';
@@ -142,14 +143,30 @@ class _ScreenContent extends StatelessWidget {
               child: _FestivalCard(
                 card: item,
                 onPressed: () async {
-                  debugPrint('Clicou no botão');
-                  final result = await walletState.transferPYUSD(item);
-                  debugPrint('Resultado: success=${result.success}, message=${result.message}');
+                  if (item.id == null) {
+                    return;
+                  }
+
+                  final result = await walletState.transferPYUSD(item, context);
 
                   if (result.message != null) {
                     showSnackBarDefault(
                       context: context,
                       message: result.message!,
+                      backgroundColor: Colors.redAccent,
+                    );
+
+                    return;
+                  }
+
+                  final finishResult = await state.finishTransactionCard(
+                    item.id!,
+                  );
+
+                  if (finishResult.message != null) {
+                    showSnackBarDefault(
+                      context: context,
+                      message: finishResult.message!,
                       isError: true,
                     );
 
@@ -158,7 +175,7 @@ class _ScreenContent extends StatelessWidget {
 
                   showSnackBarDefault(
                     context: context,
-                    message: 'Sucesso na compra do cartão!',
+                    message: context.s.cardPurchaseSuccess,
                   );
                 },
               ),
@@ -248,26 +265,27 @@ class _FestivalCard extends StatelessWidget {
                   ),
                 ],
               ),
-              OutlinedButtonDefault(
-                borderSide: BorderSide(
-                  color: AppColors.secondaryGreen,
-                  width: 1,
-                ),
-                onPressed: onPressed,
-                borderRadius: BorderRadius.circular(16),
-                color: AppColors.softOrange,
-                splashColor: AppColors.terracottaRed.withAlpha(
-                  (0.3 * 255).toInt(),
-                ),
-                padding: EdgeInsets.zero,
-                child: Text(
-                  context.s.buyNowButton,
-                  style: TextStylesDefault.robotButtonStyle.copyWith(
-                    color: Colors.white,
-                    fontSize: 14,
+              if (card.statusCode == 0)
+                OutlinedButtonDefault(
+                  borderSide: BorderSide(
+                    color: AppColors.secondaryGreen,
+                    width: 1,
+                  ),
+                  onPressed: onPressed,
+                  borderRadius: BorderRadius.circular(16),
+                  color: AppColors.softOrange,
+                  splashColor: AppColors.terracottaRed.withAlpha(
+                    (0.3 * 255).toInt(),
+                  ),
+                  padding: EdgeInsets.zero,
+                  child: Text(
+                    context.s.buyNowButton,
+                    style: TextStylesDefault.robotButtonStyle.copyWith(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
         ],
