@@ -3,15 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:mirage/default/constants.dart';
 import 'package:mirage/domain/entities/entity_user.dart';
 import 'package:mirage/extension/context.dart';
-import 'package:reown_appkit/modal/appkit_modal_impl.dart';
 import 'package:reown_appkit/reown_appkit.dart';
 
 import '../../domain/exception/api_response_exception.dart';
 
 /// State management class for handling wallet connections using Reown AppKit.
 class WalletState extends ChangeNotifier {
-  WalletState();
-
   ReownAppKitModal? _appKitModal;
 
   // =-=-=-=-=-=-=-=-=-=-=-=-=- DECLARATIONS =-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -24,7 +21,11 @@ class WalletState extends ChangeNotifier {
   /// Returns true if the wallet is connected, false if disconnected, or null if unknown.
   bool? get isConnected => _appKitModal?.isConnected;
 
+  /// Returns the wallet address associated with the current session.
   ///
+  /// It retrieves the full address using the session's `getAddress` method with the 'eip155' key.
+  /// If no address is found, it returns null. Otherwise, it extracts and returns the last segment
+  /// of the address (after splitting by ':').
   String? get walletAddress {
     final fullAddress = _appKitModal?.session?.getAddress('eip155');
 
@@ -108,17 +109,4 @@ class WalletState extends ChangeNotifier {
 
   /// Returns the underlying ReownAppKit modal instance.
   ReownAppKitModal? get modal => _appKitModal;
-
-  /// Registers the current user based on the wallet session.
-  ///
-  /// Currently creates a [UserInfo] object with the wallet address.
-  Future<void> registerUser() async {
-    if (_appKitModal!.session == null) {
-      return;
-    }
-
-    final address = _appKitModal!.session!.getAddress('eip155');
-
-    final user = UserInfo(walletAddress: address ?? '');
-  }
 }

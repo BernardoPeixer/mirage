@@ -5,6 +5,7 @@ import 'package:mirage/default/colors.dart';
 import 'package:mirage/default/routes.dart';
 import 'package:mirage/default/text_styles.dart';
 import 'package:mirage/extension/context.dart';
+import 'package:mirage/presentation/login/states/login_state.dart';
 import 'package:mirage/presentation/state/wallet_state.dart';
 import 'package:mirage/presentation/util/util/custom_snack_bar.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final walletState = Provider.of<WalletState>(context);
+    final loginState = Provider.of<LoginState>(context);
 
     return Scaffold(
       backgroundColor: AppColors.scaffoldColorDefault,
@@ -40,47 +42,75 @@ class LoginPage extends StatelessWidget {
             Padding(padding: EdgeInsets.symmetric(vertical: 15)),
             Align(
               alignment: AlignmentGeometry.center,
-              child: SizedBox(
-                width: 200,
-                child: OutlinedButtonDefault(
-                  borderSide: BorderSide(
-                    color: AppColors.secondaryGreen,
-                    width: 1,
-                  ),
-                  onPressed: () async {
-                    final result = await walletState.openModalVisual(context);
-
-                    if (result.message != null) {
-                      showSnackBarDefault(
-                        context: context,
-                        message: result.message ?? context.s.unexpectedError,
-                      );
-
-                      return;
-                    }
-
-                    if(result.success) {
-
-                    }
-                  },
-                  borderRadius: BorderRadius.circular(16),
-                  color: AppColors.softOrange,
-                  splashColor: AppColors.terracottaRed.withAlpha(
-                    (0.3 * 255).toInt(),
-                  ),
-                  child: Text(
-                    context.s.connectWalletButton,
-                    style: TextStylesDefault.robotButtonStyle.copyWith(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-              ),
+              child: SizedBox(width: 200, child: _ConnectWalletButton()),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _ConnectWalletButton extends StatelessWidget {
+  const _ConnectWalletButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Selector<LoginState, bool>(
+      selector: (_, loginState) => loginState.buttonLoading,
+      builder: (context, buttonLoading, _) {
+        return OutlinedButtonDefault.loading(
+          isLoading: buttonLoading,
+          borderSide: BorderSide(color: AppColors.secondaryGreen, width: 1),
+          onPressed: () async {
+            final walletState = Provider.of<WalletState>(
+              context,
+              listen: false,
+            );
+            final loginState = Provider.of<LoginState>(context, listen: false);
+
+            loginState.buttonLoading = true;
+            final result = await walletState.openModalVisual(context);
+
+            if (result.message != null) {
+              showSnackBarDefault(
+                context: context,
+                message: result.message ?? context.s.unexpectedError,
+                isError: true,
+              );
+
+              loginState.buttonLoading = false;
+              return;
+            }
+
+            final walletAddress = walletState.walletAddress ?? '';
+            final validUser = await loginState.checkUser(walletAddress);
+
+            if (!validUser) {
+              await loginState.registerUser(walletAddress);
+
+              showSnackBarDefault(
+                context: context,
+                message: context.s.userRegisteredSuccessfully,
+              );
+            }
+
+            loginState.buttonLoading = false;
+
+            Navigator.pushNamed(context, AppRoutes.cardsRoute);
+          },
+          borderRadius: BorderRadius.circular(16),
+          color: AppColors.softOrange,
+          splashColor: AppColors.terracottaRed.withAlpha((0.3 * 255).toInt()),
+          child: Text(
+            context.s.connectWalletButton,
+            style: TextStylesDefault.robotButtonStyle.copyWith(
+              color: Colors.white,
+              fontSize: 18,
+            ),
+          ),
+        );
+      },
     );
   }
 }

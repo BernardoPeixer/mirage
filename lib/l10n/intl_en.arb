@@ -13,5 +13,8 @@
   "registerButton": "Register",
   "fieldRequired": "This field is required",
   "cardListedSuccessfully": "Card listed successfully!",
-  "walletConnectionFailed": "Could not connect to your wallet"
+  "walletConnectionFailed": "Could not connect to your wallet",
+  "userRegistrationFailed": "Failed to register user",
+  "loading": "Loading...",
+  "userRegisteredSuccessfully": "User registered successfully!"
 }

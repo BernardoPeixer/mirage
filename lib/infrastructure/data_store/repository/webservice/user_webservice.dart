@@ -6,9 +6,10 @@ import 'package:mirage/infrastructure/data_store/repository/webservice/mirage_we
 
 import '../../../../domain/exception/api_response_exception.dart';
 
-///
+/// UserWebservice handles user-related API requests.
 class UserWebservice extends MirageWebService {
-  ///
+  /// Registers a new user with the provided [UserInfo].
+  /// Throws [ApiResponseException] if the API call fails.
   Future<void> registerUser(UserInfo user) async {
     final url = '$domain/api/user/register';
     final uri = Uri.parse(url);
@@ -31,6 +32,8 @@ class UserWebservice extends MirageWebService {
     }
   }
 
+  /// Checks if a user exists for the given [walletAddress].
+  /// Returns a map with the API response, or throws [ApiResponseException] on failure.
   Future<Map<String, dynamic>?> checkUser(String walletAddress) async {
     final url = '$domain/api/user/checkUser';
     final uri = Uri.parse(url);

@@ -43,9 +43,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "fieldRequired": MessageLookupByLibrary.simpleMessage(
       "This field is required",
     ),
+    "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
     "registerButton": MessageLookupByLibrary.simpleMessage("Register"),
     "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage("Unexpected error"),
+    "userRegisteredSuccessfully": MessageLookupByLibrary.simpleMessage(
+      "User registered successfully!",
+    ),
+    "userRegistrationFailed": MessageLookupByLibrary.simpleMessage(
+      "Failed to register user",
+    ),
     "walletConnectionFailed": MessageLookupByLibrary.simpleMessage(
       "Could not connect to your wallet",
     ),

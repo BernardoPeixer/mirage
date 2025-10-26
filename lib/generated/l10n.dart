@@ -168,6 +168,31 @@ class S {
       args: [],
     );
   }
+
+  /// `Failed to register user`
+  String get userRegistrationFailed {
+    return Intl.message(
+      'Failed to register user',
+      name: 'userRegistrationFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading...`
+  String get loading {
+    return Intl.message('Loading...', name: 'loading', desc: '', args: []);
+  }
+
+  /// `User registered successfully!`
+  String get userRegisteredSuccessfully {
+    return Intl.message(
+      'User registered successfully!',
+      name: 'userRegisteredSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

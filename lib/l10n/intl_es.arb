@@ -13,5 +13,8 @@
   "registerButton": "Cadastrar",
   "fieldRequired": "Campo obligatorio",
   "cardListedSuccessfully": "¡Tarjeta anunciada con éxito!",
-  "walletConnectionFailed": "No se pudo conectar a tu billetera"
+  "walletConnectionFailed": "No se pudo conectar a tu billetera",
+  "userRegistrationFailed": "Error al registrar usuario",
+  "loading": "Cargando...",
+  "userRegisteredSuccessfully": "¡Usuario registrado con éxito!"
 }

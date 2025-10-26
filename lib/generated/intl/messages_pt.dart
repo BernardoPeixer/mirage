@@ -41,9 +41,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "cryptoType": MessageLookupByLibrary.simpleMessage("Tipo da cripto"),
     "cryptoValue": MessageLookupByLibrary.simpleMessage("Valor da cripto"),
     "fieldRequired": MessageLookupByLibrary.simpleMessage("Campo obrigatório"),
+    "loading": MessageLookupByLibrary.simpleMessage("Carregando..."),
     "registerButton": MessageLookupByLibrary.simpleMessage("Cadastrar"),
     "unavailable": MessageLookupByLibrary.simpleMessage("Indisponível"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage("Erro inesperado"),
+    "userRegisteredSuccessfully": MessageLookupByLibrary.simpleMessage(
+      "Usuário registrado com sucesso!",
+    ),
+    "userRegistrationFailed": MessageLookupByLibrary.simpleMessage(
+      "Erro ao registrar usuário",
+    ),
     "walletConnectionFailed": MessageLookupByLibrary.simpleMessage(
       "Não foi possível se conectar à sua carteira",
     ),
