@@ -50,7 +50,7 @@ class _AddFestivalCardFAB extends StatelessWidget {
       backgroundColor: AppColors.softOrange,
       child: Center(child: Icon(Icons.add, color: Colors.white)),
       onPressed: () async {
-        final result = await showModalBottomSheet<RegisterResult>(
+        final result = await showModalBottomSheet<RegisterResult?>(
           context: context,
           isScrollControlled: true,
           builder: (context) {
@@ -69,11 +69,6 @@ class _AddFestivalCardFAB extends StatelessWidget {
           showSnackBarDefault(
             context: context,
             message: context.s.cardListedSuccessfully,
-          );
-        } else {
-          showSnackBarDefault(
-            context: context,
-            message: result?.message ?? context.s.unexpectedError,
           );
         }
       },

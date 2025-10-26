@@ -15,6 +15,13 @@ import '../../generated/l10n.dart';
 class WalletState extends ChangeNotifier {
   WalletState();
 
+  @override
+  void dispose() {
+    _appKitModal?.onModalConnect.unsubscribeAll();
+    _appKitModal?.onModalDisconnect.unsubscribeAll();
+    super.dispose();
+  }
+
   // =-=-=-=-=-=-=-=-=-=-=-=-=- DECLARATIONS =-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
   ReownAppKitModal? _appKitModal;
